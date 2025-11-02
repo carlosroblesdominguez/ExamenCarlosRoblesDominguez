@@ -1,0 +1,11 @@
+{% extends 'AppExamenCarlos/base.html' %}
+{% block title %}Detalle Modelo Simple{% endblock %}
+
+{% block content %}
+{% if objeto %}
+    <h2>{{ objeto.nombre }}</h2>
+    <p>{{ objeto.descripcion }}</p>
+{% else %}
+    <p>Objeto no encontrado.</p>
+{% endif %}
+{% endblock %}

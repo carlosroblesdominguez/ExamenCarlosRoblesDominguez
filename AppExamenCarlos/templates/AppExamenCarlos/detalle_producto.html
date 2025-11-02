@@ -1,0 +1,12 @@
+{% extends 'AppExamenCarlos/base.html' %}
+{% block title %}Detalle Producto{% endblock %}
+
+{% block content %}
+{% if producto %}
+    <h2>{{ producto.nombre }}</h2>
+    <p>Categoría: {{ producto.categoria.nombre }}</p>
+    <p>Precio: {{ producto.precio }}</p>
+{% else %}
+    <p>Producto no encontrado.</p>
+{% endif %}
+{% endblock %}
