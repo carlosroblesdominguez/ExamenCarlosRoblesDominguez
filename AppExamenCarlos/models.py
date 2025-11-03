@@ -63,6 +63,7 @@ class Coche(models.Model):
     def __str__(self):
         return f"{self.modelo} ({self.marca.nombre})"
 
+#Tabla intermedia entre coche y revision
 class CocheRevision(models.Model):
     coche = models.ForeignKey(
         Coche,
