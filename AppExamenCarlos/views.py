@@ -1,30 +1,35 @@
 from django.shortcuts import render
-from models import *
+from .models import *
 
 # Create your views here.
 
-# 1er ejercicio: filtrado por marca y ciudad recibidos en la URL
+def base(request):
+    return render(request, 'AppExamenCarlos/base.html')
 
-
-def coches_por_marca_ciudad(request, marca_nombre, ciudad):
-    coches = Coche.objects.filter(
-        marca_nombre_contains=marca_nombre,
-        fabrica_ciudad_contains=ciudad
+# EJERCICIO1
+def coches_por_marca_ciudad(request, marca, ciudad):
+    """
+    Muestra los coches filtrados por marca y ciudad.
+    Usa select_related() para relaciones ManyToOne (ForeignKey).
+    """
+    coches = (
+        Coche.objects
+        .select_related('marca', 'fabrica')  # Relaciones ManyToOne
+        .filter(
+            marca__nombre__icontains=marca,
+            fabrica__ciudad__icontains=ciudad
+        )
     )
-    return render(request, 'AppExamenCarlos/lista_coches_filtrada_marca_ciudad.html', {'coches': coches})
+    
+    # SQL equivalente
+    # coches = Coche.objects.raw('''
+    #     SELECT c.*
+    #     FROM appExamencarlos_coche AS c
+    #     INNER JOIN appExamencarlos_marca AS m ON m.id = c.marca_id
+    #     INNER JOIN appExamencarlos_fabrica AS f ON f.id = c.fabrica_id
+    #     WHERE m.nombre LIKE %s AND f.ciudad LIKE %s
+    # ''', [f'%{marca}%', f'%{ciudad}%'])
 
-# 2do ejercicio: filtrado por año o precio y kilometraje (parámetros GET)
+    return render(request, 'AppExamenCarlos/lista_coches.html', {'coches': coches})
 
-def coches_filtrados(request, anyo=None, precio=None, kilometraje=None):
-    coches = Coche.objects.all()
-
-    if anyo:
-        coches = coches.filter(anio_lanzamiento_gte=anyo)
-    if precio:
-        coches = coches.filter(precio_base_lte=precio)
-    if kilometraje:
-        coches = coches.filter(revisiones_kilometraje_gt=kilometraje).distinct()
-        #distinct() se usa en un QuerySet para eliminar registros duplicados
-        #que puedan aparecer como resultado de un JOIN o de filtrados que involucran relaciones.
-
-    return render(request, 'AppExamenCarlos/lista_coches_filtrados.html', {'coches': coches})
+# EJERCICIO2
