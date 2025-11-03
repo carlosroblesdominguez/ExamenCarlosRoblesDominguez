@@ -6,6 +6,18 @@ from .models import *
 def base(request):
     return render(request, 'AppExamenCarlos/base.html')
 
+def error_404(request, exception):
+    return render(request, 'AppExamenCarlos/error_404.html', status=404)
+
+def error_500(request):
+    return render(request, 'AppExamenCarlos/error_500.html', status=500)
+
+def error_403(request, exception):
+    return render(request, 'AppExamenCarlos/error_403.html', status=403)
+
+def error_400(request, exception):
+    return render(request, 'AppExamenCarlos/error_400.html', status=400)
+
 # EJERCICIO1
 def coches_por_marca_ciudad(request, marca, ciudad):
     """

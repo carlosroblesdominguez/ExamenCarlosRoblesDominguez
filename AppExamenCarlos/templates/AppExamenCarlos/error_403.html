@@ -1,0 +1,9 @@
+{% extends "AppExamenCarlos/base.html" %}
+
+{% block title %}403 – Prohibido{% endblock %}
+
+{% block content %}
+<h1>403 – Prohibido</h1>
+<p>No tienes permiso para acceder a esta página.</p>
+<a href="{% url 'base' %}">Volver al inicio</a>
+{% endblock %}
