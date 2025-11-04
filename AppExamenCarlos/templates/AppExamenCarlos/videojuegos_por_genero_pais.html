@@ -1,0 +1,38 @@
+{% extends 'AppExamenCarlos/base.html' %}
+
+{% block title %}Coches por marca y ciudad{% endblock %}
+
+{% block content %}
+<h2>Videojuegos filtrados por género y país</h2>
+
+{% if videojuegos %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Género</th>
+        <th>Estudio</th>
+        <th>Año lanzamiento</th>
+        <th>Precio base (€)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for videojuego in videojuegos %}
+        <tr>
+          <td>{{ videojuego.id }}</td>
+          <td>{{ videojuego.nombre }}</td>
+          <td>{{ videojuego.genero }}</td>
+          <td>{{ videojuego.estudio }}</td>
+          <td>{{ videojuego.anyo_lanzamiento }}</td>
+          <td>{{ videojuego.precio_base }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No se encontraron juegos de este genero o pais.</p>
+{% endif %}
+
+<a href="{% url 'base' %}">Volver al inicio</a>
+{% endblock %}

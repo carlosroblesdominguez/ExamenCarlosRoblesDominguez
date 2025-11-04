@@ -19,12 +19,13 @@
 <body>
     <header>
         <h1>Examen Django - Carlos Robles</h1>
-        <nav>
-            <a href="{% url 'coches_por_marca_ciudad' marca='Renault' ciudad='Sevilla' %}">Coches por Marca/Ciudad</a>
-        </nav>
     </header>
 
     <main>
+        <nav>
+            <a href="{% url 'base' %}">Inicio</a>
+            <a href="{% url 'videojuegos_por_genero_pais.html' genero='none' pais_origen='none' %}">Videojuegos por género y país</a>
+        </nav>
         {% block content %}{% endblock %}
     </main>
 
