@@ -19,29 +19,29 @@ def error_400(request, exception):
     return render(request, 'AppExamenCarlos/error_400.html', status=400)
 
 # EJERCICIO1
-def coches_por_marca_ciudad(request, marca, ciudad):
+def videojuegos_por_genero_pais(request, genero, pais_origen):
     """
-    Muestra los coches filtrados por marca y ciudad.
+    Muestra los videojuegos filtrados por genero y pais.
     Usa select_related() para relaciones ManyToOne (ForeignKey).
     """
-    coches = (
-        Coche.objects
-        .select_related('marca', 'fabrica')  # Relaciones ManyToOne
+    videojuegos = (
+        Videojuego.objects
+        .select_related('estudio', 'plataforma')  # Relaciones ManyToOne
         .filter(
-            marca__nombre__icontains=marca,
-            fabrica__ciudad__icontains=ciudad
+            genero__icontains=genero,
+            estudio__pais_origen__icontains=pais_origen,
         )
     )
     
     # SQL equivalente
-    # coches = Coche.objects.raw('''
+    # videojuegos = Videojuego.objects.raw('''
     #     SELECT c.*
-    #     FROM appExamencarlos_coche AS c
-    #     INNER JOIN appExamencarlos_marca AS m ON m.id = c.marca_id
-    #     INNER JOIN appExamencarlos_fabrica AS f ON f.id = c.fabrica_id
-    #     WHERE m.nombre LIKE %s AND f.ciudad LIKE %s
-    # ''', [f'%{marca}%', f'%{ciudad}%'])
+    #     FROM appExamencarlos_videojuego AS v
+    #     INNER JOIN appExamencarlos_estudio AS e ON e.id = v.estudio_id
+    #     INNER JOIN appExamencarlos_plataforma AS p ON p.id = v.fabrica_id
+    #     WHERE v.nombre LIKE %s AND e.pais_origen LIKE %s
+    # ''', [f'%{nombre}%', f'%{pais_origen}%'])
 
-    return render(request, 'AppExamenCarlos/lista_coches.html', {'coches': coches})
+    return render(request, 'AppExamenCarlos/videojuegos_por_genero_pais.html', {'videojuegos': videojuegos})
 
 # EJERCICIO2
