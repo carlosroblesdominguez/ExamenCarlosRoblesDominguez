@@ -9,6 +9,13 @@ class Plataforma(models.Model):
     def __str__(self):
         return f"Plataforma {self.nombre}"
 
+class Fabricante(models.Model):
+    nombre = models.CharField(max_length=100)
+    pais = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"Fabricante {self.nombre} ({self.pais})"
+
 class Analisis(models.Model):
     fecha = models.DateField()
     rendimiento = models.CharField(max_length=50)
@@ -17,7 +24,7 @@ class Analisis(models.Model):
         on_delete=models.CASCADE,
         related_name='plataformas'
     )
-    resultado = models.CharField(max_length=100)
+    resultado = models.IntegerField()
 
     def __str__(self):
         return f"analisis {self.id} - Resultado {self.resultado}"
