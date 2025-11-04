@@ -30,7 +30,7 @@ class Sede(models.Model):
         return f"{self.nombre} ({self.ciudad})"
 
 class Estudio(models.Model):
-    nombre = models.CharField(max_length=100)
+    estudio_desarrollo = models.CharField(max_length=100)
     pais_origen = models.CharField(max_length=100)
 
     def __str__(self):
@@ -62,7 +62,7 @@ class Videojuego(models.Model):
     )
 
     def __str__(self):
-        return f"{self.nombre} ({self.estudio.nombre})"
+        return f"{self.nombre} ({self.estudio.estudio_desarrollo})"
 
 #Tabla intermedia entre videojuego y analisis
 class VideojuegoAnalisis(models.Model):
