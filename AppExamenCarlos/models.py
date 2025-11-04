@@ -55,14 +55,14 @@ class Videojuego(models.Model):
         related_name='videojuegos'
     )
     # Relación OneToOne con Estudio: un videojuego pertenece a un estudio
-    Estudio = models.OneToOneField(
-        Plataforma,
+    estudio = models.OneToOneField(
+        Estudio,
         on_delete=models.CASCADE,
         related_name='videojuego'
     )
 
     def __str__(self):
-        return f"{self.modelo} ({self.marca.nombre})"
+        return f"{self.nombre} ({self.estudio.nombre})"
 
 #Tabla intermedia entre videojuego y analisis
 class VideojuegoAnalisis(models.Model):
