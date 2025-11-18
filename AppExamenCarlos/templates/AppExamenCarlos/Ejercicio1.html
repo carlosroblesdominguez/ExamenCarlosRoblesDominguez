@@ -1,0 +1,38 @@
+{% extends 'AppExamenCarlos/base.html' %}
+
+{% block title %}Animales por nombre y nombre de refugio{% endblock %}
+
+{% block content %}
+<h2>Animales filtrados por nombre y nombre de refugio</h2>
+
+{% if animales %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Género</th>
+        <th>Especie</th>
+        <th>Edad</th>
+        <th>Refugio</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for animal in animales %}
+        <tr>
+          <td>{{ animal.id }}</td>
+          <td>{{ animal.nombre }}</td>
+          <td>{{ animal.genero }}</td>
+          <td>{{ animal.especie }}</td>
+          <td>{{ animal.edad }}</td>
+          <td>{{ animal.refugio.nombre_refugio }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No se encontraron animales con este nombre o en este refugio.</p>
+{% endif %}
+
+<a href="{% url 'base' %}">Volver al inicio</a>
+{% endblock %}
