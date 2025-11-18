@@ -70,4 +70,21 @@ def ejercicio2(request):
     }
     return render(request, 'AppExamenCarlos/Ejercicio2.html', contexto)
 
-# EJERCICIO3
+# EJERCICIO3 filtrado de animales order by edad de manera descendente
+def ejercicio3(request):
+    animales = Animal.objects.all().order_by('-edad')
+
+    # SQL Alternativo usando raw SQL
+    # query = '''
+    # SELECT id, nombre, genero, especie, edad
+    # FROM AppExamenCarlos_animal
+    # ORDER BY edad DESC
+    # '''
+    # animales = Animal.objects.raw(query)
+    
+    contexto = {
+        'animales': animales
+    }
+    return render(request, 'AppExamenCarlos/Ejercicio3.html', contexto)
+
+#EJERCICIO4
