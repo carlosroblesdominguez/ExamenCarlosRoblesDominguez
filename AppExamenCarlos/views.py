@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import *
-from django.db.models import Avg
+from django.db.models import Avg,Max
 
 # Create your views here.
 
@@ -138,3 +138,17 @@ def ejercicio5(request, centro_id):
         'animales': animales
     }
     return render(request, 'AppExamenCarlos/Ejercicio5.html', contexto)
+
+# EJERCICIO6 obtener la última revisión veterinaria de un animal que pertenezca a un veterinario en concreto, el fabricante de una vacuna concreta y el centro de un refugio en concreto.
+def ejercicio6(request, veterinario_id, vacuna_id, centro_id):
+    animales = Animal.objects.filter(
+        centro__id=centro_id,
+        vacunas_animales__vacuna__id=vacuna_id,
+        revision_veterinaria__veterinario__id=veterinario_id
+    ).annotate(
+        ultima_revision_fecha=Max('revision_veterinaria__fecha_revision')
+    )
+
+    contexto = {
+        'animales': animales
+    }     

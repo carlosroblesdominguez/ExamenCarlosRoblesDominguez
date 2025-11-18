@@ -29,6 +29,7 @@
             <a href="{% url 'ejercicio3' %}">Animales ordenados por edad</a>
             <a href="{% url 'ejercicio4' year=2025 %}">Refugios con revisiones veterinarias</a>
             <a href="{% url 'ejercicio5' centro_id=1 %}">Animales con baja puntuacion de salud</a>
+            <a href="{% url 'ejercicio6' veterinario_id=1 vacuna_id=1 centro_id=1 %}">Última revisión veterinaria</a>
         </nav>
         {% block content %}{% endblock %}
     </main>

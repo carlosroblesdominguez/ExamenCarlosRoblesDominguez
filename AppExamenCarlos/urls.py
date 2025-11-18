@@ -13,4 +13,6 @@ urlpatterns = [
     path('refugios_revision/<int:year>/', views.ejercicio4, name='ejercicio4'),
     # URl para el EJERCICIO5 obtener todos los animales de un centro en concreto que tengan una media de puntuación de salud en sus revisiones menor que 50.
     path('animales_centro/<int:centro_id>/', views.ejercicio5, name='ejercicio5'),
+    # URL para el EJERCICIO6 obtener la última revisión veterinaria de un animal que pertenezca a un veterinario en concreto, el fabricante de una vacuna concreta y el centro de un refugio en concreto.
+    path('ultima_revision/<int:veterinario_id>/<int:vacuna_id>/<int:centro_id>/', views.ejercicio6, name='ejercicio6'),
 ]

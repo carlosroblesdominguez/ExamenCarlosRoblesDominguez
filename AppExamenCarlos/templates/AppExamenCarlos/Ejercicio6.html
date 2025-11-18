@@ -1,0 +1,30 @@
+{% extends 'AppExamenCarlos/base.html' %}
+
+{% block title %}Última revisión veterinaria{% endblock %}
+
+{% block content %}
+<h2>Última revisión veterinaria</h2>
+
+{% if animales %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for animal in animales %}
+        <tr>
+          <td>{{ animal.id }}</td>
+          <td>{{ animal.nombre }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No se encontraron animales</p>
+{% endif %}
+
+<a href="{% url 'base' %}">Volver al inicio</a>
+{% endblock %}
