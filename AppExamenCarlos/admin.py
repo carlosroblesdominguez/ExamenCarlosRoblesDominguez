@@ -2,8 +2,9 @@ from django.contrib import admin
 from .models import *
 
 # Register your models here.
-admin.site.register(Plataforma)
-admin.site.register(Analisis)
-admin.site.register(Sede)
-admin.site.register(Estudio)
-admin.site.register(Videojuego)
+admin.site.register(Refugio)
+admin.site.register(Vacuna)
+admin.site.register(Revision_Veterinaria)
+admin.site.register(Animal)
+admin.site.register(AnimalVacunas)
+admin.site.register(Centro)

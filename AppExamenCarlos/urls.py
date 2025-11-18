@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.base, name='base'),
-    # URL videojuegos por genero y pais
-    path('videojuegos/<str:genero>/<str:pais_origen>/', views.videojuegos_por_genero_pais, name='videojuegos_por_genero_pais.html'),
+    # URL para el EJERCICIO1 Filtrado de animales por nombre y nombre de refugio
+    path('animal/<str:nombre>/refugio/<str:nombre_refugio>/', views.ejercicio1, name='ejercicio1'),
 ]

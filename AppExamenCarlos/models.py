@@ -3,99 +3,69 @@ from django.db import models
 # Create your models here.
 
 #Posible modelo para el examen
-class Plataforma(models.Model):
-    nombre = models.CharField(max_length=50)
+class Refugio(models.Model):
+    nombre_refugio = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"Plataforma {self.nombre}"
-
-class Analisis(models.Model):
-    fecha = models.DateField()
-    rendimiento = models.CharField(max_length=50)
-    plataforma = models.ForeignKey(
-        Plataforma,
-        on_delete=models.CASCADE,
-        related_name='plataformas'
-    )
-    resultado = models.IntegerField()
-
-    def __str__(self):
-        return f"analisis {self.id} - Resultado {self.resultado}"
-
-class Sede(models.Model):
+        return f"Refugio {self.nombre_refugio}"
+    
+class Vacuna(models.Model):
     nombre = models.CharField(max_length=100)
-    ciudad = models.CharField(max_length=100)
-    estudio = models.ForeignKey(
-        'Estudio',
+    enfermedad = models.CharField(max_length=100)
+    descripcion = models.TextField()
+
+    def __str__(self):
+        return self.nombre
+
+class Revision_Veterinaria(models.Model):
+    fecha_revision = models.DateField()
+    observaciones = models.TextField()
+    refugio = models.ForeignKey(
+        'Refugio',
         on_delete=models.CASCADE,
-        related_name='sedes'
+        related_name='revisiones'
     )
 
     def __str__(self):
-        return f"{self.nombre} ({self.ciudad})"
+        return f"Revision {self.id} - {self.fecha_revision}"
 
-class Estudio(models.Model):
-    estudio_desarrollo = models.CharField(max_length=100)
-    pais_origen = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.estudio_desarrollo
-
-class Videojuego(models.Model):
+class Centro(models.Model):
     nombre = models.CharField(max_length=100)
-    genero = [
-        ('Accion', 'Accion'),
-        ('Aventura', 'Aventura'),
-        ('RPG', 'RPG'), 
-        ('Deportes', 'Deportes'),
-        ('Estrategia', 'Estrategia'),
-        ('Simulacion', 'Simulacion'),
-        ('Otros', 'Otros'),
-    ]
-    genero = models.CharField(
-        max_length=20,
-        choices=genero,
-    )
-    anyo_lanzamiento = models.IntegerField()
-    precio_base = models.DecimalField(
-        max_digits=4,
-        decimal_places=2
-    )
-    analisis = models.ForeignKey(
-        Analisis,
+    ubicacion = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nombre
+
+class Animal(models.Model):
+    nombre = models.CharField(max_length=100)
+    genero = models.CharField(max_length=10)
+    especie = models.CharField(max_length=50)
+    edad = models.IntegerField()
+    refugio = models.ForeignKey(
+        Refugio,
         on_delete=models.CASCADE,
-        related_name='videojuegos'
-    )
-    plataforma = models.ForeignKey(
-        Plataforma,
-        on_delete=models.CASCADE,
-        related_name='videojuegos'
-    )
-    # Relación OneToOne con Estudio: un videojuego pertenece a un estudio
-    estudio = models.OneToOneField(
-        Estudio,
-        on_delete=models.CASCADE,
-        related_name='videojuego'
+        related_name='animales'
     )
 
     def __str__(self):
-        return f"{self.nombre} ({self.estudio.estudio_desarrollo})"
+        return f"{self.nombre} {self.genero} ({self.especie})"
 
-#Tabla intermedia entre videojuego y analisis
-class VideojuegoAnalisis(models.Model):
-    videojuego = models.ForeignKey(
-        Videojuego,
+#Tabla intermedia entre animal y vacuna
+class AnimalVacunas(models.Model):
+    animal = models.ForeignKey(
+        Animal,
         on_delete=models.CASCADE,
-        related_name='videojuegos_analisis'
+        related_name='vacunas_animales'
     )
-    analisis = models.ForeignKey(
-        Analisis, 
+    vacuna = models.ForeignKey(
+        Vacuna,
         on_delete=models.CASCADE,
-        related_name='analisis_videojuegos'
+        related_name='animales_vacunados'
     )
+    fecha_vacunacion = models.DateField()
 
     def __str__(self):
-        return f"{self.videojuego.nombre} - Analisis {self.analisis.id}"
+        return f"{self.animal.nombre} - Vacuna: {self.vacuna.nombre} enfermedad: {self.vacuna.enfermedad} (fecha: {self.fecha_vacunacion})"
 
 #Modelo simple (solo campos basicos)
 """class ModeloSimple(models.Model):
