@@ -1,0 +1,32 @@
+{% extends 'AppExamenCarlos/base.html' %}
+
+<!-- obtener todos los animales de un centro en concreto que tengan una media de puntuación de salud en sus revisiones menor que 50. -->
+{% block title %}Animales con baja puntuacion de salud{% endblock %}
+
+{% block content %}
+<h2>Animales con baja puntuacion de salud en el centro especificado</h2>
+
+{% if animales %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Edad</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for animal in animales %}
+        <tr>
+          <td>{{ animal.id }}</td>
+          <td>{{ animal.nombre }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No se encontraron animales</p>
+{% endif %}
+
+<a href="{% url 'base' %}">Volver al inicio</a>
+{% endblock %}

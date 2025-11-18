@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from django.db.models import Avg
 
 # Create your views here.
 
@@ -109,3 +110,31 @@ def ejercicio4(request, year):
         'refugios': refugios
     }
     return render(request, 'AppExamenCarlos/Ejercicio4.html', contexto)
+
+# EJERCICIO5 obtener todos los animales de un centro en concreto que tengan una media de puntuación de salud en sus revisiones menor que 50.
+def ejercicio5(request, centro_id):
+    animales = Animal.objects.filter(
+        centro__id=centro_id
+    ).annotate(
+        avg_puntuacion_salud=Avg('revision_veterinaria__puntuacion_salud')
+    ).filter(
+        avg_puntuacion_salud__lt=50
+    )
+    
+    # SQL Alternativo usando raw SQL
+    # query = '''
+    # SELECT a.id, a.nombre, a.genero, a.especie, a.edad
+    # FROM AppExamenCarlos_animal a
+    # JOIN AppExamenCarlos_centro c ON a.centro_id = c.id
+    # JOIN AppExamenCarlos_revision_veterinaria rv ON a.id = rv.animal_id
+    # GROUP BY a.id, a.nombre, a.genero, a.especie, a.edad
+    # HAVING AVG(rv.puntuacion_salud) < 50
+    # WHERE c.id = %s
+    # '''
+    # parametros = [centro_id]
+    # animales = Animal.objects.raw(query, parametros)
+
+    contexto = {
+        'animales': animales
+    }
+    return render(request, 'AppExamenCarlos/Ejercicio5.html', contexto)

@@ -43,6 +43,11 @@ class Animal(models.Model):
     genero = models.CharField(max_length=10)
     especie = models.CharField(max_length=50)
     edad = models.IntegerField()
+    centro = models.ForeignKey(
+        Centro,
+        on_delete=models.CASCADE,
+        related_name='animales'
+    )
     refugio = models.ForeignKey(
         Refugio,
         on_delete=models.CASCADE,
