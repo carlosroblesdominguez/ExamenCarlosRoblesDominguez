@@ -41,4 +41,33 @@ def ejercicio1(request, nombre, nombre_refugio):
     
     return render(request, 'AppExamenCarlos/Ejercicio1.html', contexto)
 
-# EJERCICIO2
+# Vista para el EJERCICIO2 Filtrado de animales por fabricante de vacuna o nombre de enfermadad que cura la vacuna (uno de los 2) y puntuacion de salud
+def ejercicio2(request):
+    animales = Animal.objects.filter(
+        vacunas_animales__vacuna__fabricante__iexact=Vacuna.fabricante,
+        vacunas_animales__vacuna__nombre__icontains=Vacuna.enfermedad,
+        revision_veterinaria__puntuacion_salud__gt=Revision_Veterinaria.puntuacion_salud
+    ).select_related('centro').distinct()[:3]
+
+    # SQL Alternativo usando raw SQL
+    # query = '''
+    # SELECT DISTINCT a.id, a.nombre, a.genero, a.especie, a.edad, c.nombre AS centro_nombre
+    # FROM AppExamenCarlos_animal a
+    # JOIN AppExamenCarlos_centro c ON a.centro_id = c.id
+    # JOIN AppExamenCarlos_animalvacunas av ON a.id = av.animal_id
+    # JOIN AppExamenCarlos_vacuna v ON av.vacuna_id = v.id
+    # JOIN AppExamenCarlos_revision_veterinaria rv ON a.id = rv.animal_id
+    # WHERE v.fabricante = %s
+    # AND v.nombre LIKE %s
+    # AND rv.puntuacion_salud > %s
+    # LIMIT 3
+    # '''
+    # parametros = [Vacuna.fabricante, f"%{Vacuna.enfermedad}%", Revision_Veterinaria.puntuacion_salud]
+    # animales = Animal.objects.raw(query, parametros)
+    
+    contexto = {
+        'animales': animales
+    }
+    return render(request, 'AppExamenCarlos/Ejercicio2.html', contexto)
+
+# EJERCICIO3

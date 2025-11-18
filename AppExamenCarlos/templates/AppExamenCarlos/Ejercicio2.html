@@ -1,0 +1,38 @@
+{% extends 'AppExamenCarlos/base.html' %}
+
+{% block title %}Filtrado de animales por fabricante o nombre de enfermadad que cura la vacuna y puntuacion de salud{% endblock %}
+
+{% block content %}
+<h2>Animales filtrados por fabricante de vacuna o nombre de enfermedad que cura la vacuna (uno de los 2) y puntuacion de salud</h2>
+
+{% if animales %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Género</th>
+        <th>Especie</th>
+        <th>Edad</th>
+        <th>Centro</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for animal in animales %}
+        <tr>
+          <td>{{ animal.id }}</td>
+          <td>{{ animal.nombre }}</td>
+          <td>{{ animal.genero }}</td>
+          <td>{{ animal.especie }}</td>
+          <td>{{ animal.edad }}</td>
+          <td>{{ animal.centro.nombre }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No se encontraron animales con este fabricante o nombre de enfermedad que cura la vacuna y puntuacion de salud.</p>
+{% endif %}
+
+<a href="{% url 'base' %}">Volver al inicio</a>
+{% endblock %}

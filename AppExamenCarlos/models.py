@@ -11,6 +11,7 @@ class Refugio(models.Model):
     
 class Vacuna(models.Model):
     nombre = models.CharField(max_length=100)
+    fabricante = models.CharField(max_length=100)
     enfermedad = models.CharField(max_length=100)
     descripcion = models.TextField()
 
@@ -20,6 +21,7 @@ class Vacuna(models.Model):
 class Revision_Veterinaria(models.Model):
     fecha_revision = models.DateField()
     observaciones = models.TextField()
+    puntuacion_salud = models.IntegerField()
     refugio = models.ForeignKey(
         'Refugio',
         on_delete=models.CASCADE,
