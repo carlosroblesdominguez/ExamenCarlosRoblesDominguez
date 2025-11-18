@@ -1,0 +1,30 @@
+{% extends 'AppExamenCarlos/base.html' %}
+
+{% block title %}Refugios con revisiones veterinarias{% endblock %}
+
+{% block content %}
+<h2>Refugios con revisiones veterinarias en el año especificado</h2>
+
+{% if refugios %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for refugio in refugios %}
+        <tr>
+          <td>{{ refugio.id }}</td>
+          <td>{{ refugio.nombre_refugio }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No se encontraron refugios</p>
+{% endif %}
+
+<a href="{% url 'base' %}">Volver al inicio</a>
+{% endblock %}

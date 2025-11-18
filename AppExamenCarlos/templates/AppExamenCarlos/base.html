@@ -27,6 +27,7 @@
             <a href="{% url 'ejercicio1' nombre='Max' nombre_refugio='AnimalCare' %}">Animales por nombre y refugio</a>
             <a href="{% url 'ejercicio2' %}">Animales por vacuna y puntuacion de salud</a>
             <a href="{% url 'ejercicio3' %}">Animales ordenados por edad</a>
+            <a href="{% url 'ejercicio4' year=2025 %}">Refugios con revisiones veterinarias</a>
         </nav>
         {% block content %}{% endblock %}
     </main>

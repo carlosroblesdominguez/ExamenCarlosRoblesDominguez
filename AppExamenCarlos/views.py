@@ -87,4 +87,25 @@ def ejercicio3(request):
     }
     return render(request, 'AppExamenCarlos/Ejercicio3.html', contexto)
 
-#EJERCICIO4
+#EJERCICIO4 obtener todos los Refugios que tengan animales con una revisión veterinaria en un año en concreto (ej: 2024), ordenados por puntuacion_salud de la revisión de mayor a menor.
+def ejercicio4(request, year):
+    refugios = Refugio.objects.filter(
+        animales__revision_veterinaria__fecha_revision__year=year
+    ).distinct().order_by('-animales__revision_veterinaria__puntuacion_salud')
+    
+    # SQL Alternativo usando raw SQL
+    # query = '''
+    # SELECT DISTINCT r.id, r.nombre_refugio
+    # FROM AppExamenCarlos_refugio r
+    # JOIN AppExamenCarlos_animal a ON r.id = a.refugio_id
+    # JOIN AppExamenCarlos_revision_veterinaria rv ON a.id = rv.animal_id
+    # WHERE YEAR(rv.fecha_revision) = %s
+    # ORDER BY rv.puntuacion_salud DESC
+    # '''
+    # parametros = [year]
+    # refugios = Refugio.objects.raw(query, parametros)
+    
+    contexto = {
+        'refugios': refugios
+    }
+    return render(request, 'AppExamenCarlos/Ejercicio4.html', contexto)
